@@ -1,9 +1,9 @@
 Router.configure({
-  layoutTemplate: 'layout'
+  layoutTemplate: 'tmpl_layout'
 });
 Router.route('/', function() {
-  this.render('home');
+  this.render('tmpl_home');
 });
 Router.route('/about', function() {
-  this.render('about');
+  this.render('tmpl_about');
 });
