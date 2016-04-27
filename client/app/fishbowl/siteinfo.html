@@ -1,5 +1,27 @@
 <template name="siteinfo">
 
-  <h1>Site Information</h1>
+  <h1>Spot Information</h1>
+
+  {{#if selectedSite}}
+    {{> show_site_information selectedSite}}
+  {{else}}
+    Please select a fishing spot on the map.
+  {{/if}}
+
+</template>
+
+<template name="show_site_information">
+
+
+
+  <div class="row">
+    <div class="col-xs-4 col-md-4">Crowdedness</div>
+    <div class="col-xs-8 col-md-8">{{crowdedness}}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-4 col-md-4">Cleanliness</div>
+    <div class="col-xs-8 col-md-8">{{cleanliness}}</div>
+  </div>
 
 </template>

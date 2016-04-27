@@ -1,13 +1,7 @@
 Meteor.subscribe("fishingsites");
 
-// counter starts at 0
-Session.setDefault('counter', 0);
+var selectedMarker;
 
-Template.home.helpers({
-  counter: function () {
-    return Session.get('counter');
-  }
-});
 
 Template.fishmap.helpers({
     fishMapOptions: function() {
@@ -23,21 +17,14 @@ Template.fishmap.helpers({
         center: new google.maps.LatLng(lat, lng),
         zoom: 12
       };
-
-// 		var fishingSites = FishingSites.find({}).fetch();
-
-
     }
   }
 });
 
-// events
-
-Template.home.events({
-  'click button': function () {
-    // increment the counter when button is clicked
-    Session.set('counter', Session.get('counter') + 1);
-  }
+Template.siteinfo.helpers({
+	selectedSite: function() {
+		return Session.get('selectedFishingSite');
+	}
 });
 
 
@@ -49,14 +36,26 @@ Template.fishmap.onCreated(function() {
       FishingSites.find().observe({
 
         added: function (fishingSite) {
-        	console.log('fiwhbowl.js - fishingSite added called: ', fishingSite);
+        	// create a google map marker for each fishing spot
           var marker = new google.maps.Marker({
             draggable: true,
             animation: google.maps.Animation.DROP,
+            icons: 'https://www.google.com/mapfiles/marker.png',
             position: new google.maps.LatLng(fishingSite.coord.lat, fishingSite.coord.lng),
             map: map.instance,
             id: fishingSite._id
           });
+
+          marker.addListener('click', function(m) {
+          	if (selectedMarker) {
+  			  selectedMarker.setIcon('https://www.google.com/mapfiles/marker.png');          		
+          	}
+			marker.setIcon('https://www.google.com/mapfiles/marker_green.png');
+			selectedMarker = marker;
+
+		    Session.set('selectedFishingSite', fishingSite);
+          });
+
 
 //          google.maps.event.addListener(marker, 'dragend', function(event) {
 //            Markers.update(marker.id, { $set: { lat: event.latLng.lat(), lng: event.latLng.lng() }});
@@ -80,5 +79,8 @@ Template.fishmap.onCreated(function() {
 Template.fishmap.onRendered(function() {
   GoogleMaps.load();
 });
+
+// helper
+
 
 
