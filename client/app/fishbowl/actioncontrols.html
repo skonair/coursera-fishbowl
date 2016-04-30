@@ -1,22 +1,37 @@
 <template name="actioncontrols">
 
+  <p></p>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      {{> actioncontrolsbuttons}}
+    </div>
+    <div class="col-xs-12 col-md-4">
+    </div>
+  </div>
+
+</template>
+
+<template name="actioncontrolsbuttons">
   {{#if isLoggedIn}}
 
     {{#if isFishing}}
       <form class="js-tweet">
-        <button id="tweetBtn" class="btn btn-primary" type="submit">Tweet 'I am fishing'</button>
+        <button id="tweetBtn" class="btn btn-primary action-btn" type="submit">Tweet 'I am fishing'</button>
       </form>
+      <p></p>
       <form class="js-stop-fishing">  
-        <button id="stopFishingBtn" class="btn btn-warning" type="submit">Stop Fishing</button>
+        <button id="stopFishingBtn" class="btn btn-warning action-btn" type="submit">Stop Fishing</button>
       </form>  
     {{else}}
       <form class="js-start-fishing">
-        <button id="startFishingBtn" class="btn btn-primary" type="submit">Start Fishing</button>
+        <button id="startFishingBtn" class="btn btn-primary action-btn" type="submit">Start Fishing</button>
       </form>
     {{/if}}
 
   {{else}}
-    Please login to activate action controls.
+    <h4>Please login to activate action controls.</h4>
   {{/if}}
-
+	
 </template>
+

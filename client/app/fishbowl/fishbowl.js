@@ -24,7 +24,7 @@ Template.siteinfo.helpers({
 	}
 });
 
-Template.actioncontrols.helpers({
+Template.actioncontrolsbuttons.helpers({
 	isLoggedIn: function() {
 		if (Meteor.user()) {
 			return true;
@@ -83,7 +83,7 @@ Template.fishmap.onRendered(function() {
   GoogleMaps.load();
 });
 
-Template.actioncontrols.events({
+Template.actioncontrolsbuttons.events({
 	"click .js-start-fishing": function(event) {
 		var savedFishingSite = Meteor.call('startFishing', getCurrentLocation(), function(err, id) {
 			if (err) {
@@ -98,6 +98,7 @@ Template.actioncontrols.events({
 	"click .js-stop-fishing": function(event) {
 		Meteor.call('stopFishing');
 		Session.set('isFishing', false);
+		Session.set('selectedFishingSite', undefined);
 		return false; // prevent browser reload
 	},
 	"click .js-tweet": function(event) {
@@ -111,10 +112,12 @@ Template.actioncontrols.events({
 
 function getCurrentLocation() {
     var currentLocation = Geolocation.currentLocation();
-    var lat = -37.8136;
-    var lng = 144.9631;
-    lat = currentLocation.coords.latitude;
-    lng = currentLocation.coords.longitude;
+    var lat = 52.4;
+    var lng = 8.7;
+    if (currentLocation) {
+      lat = currentLocation.coords.latitude;
+      lng = currentLocation.coords.longitude;    	
+    }
     return { 
     	lat: lat, 
     	lng: lng
