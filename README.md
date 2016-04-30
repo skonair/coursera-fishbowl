@@ -5,3 +5,8 @@ To run the application, simply install meteor and run the application:
 ```
 $ meteor
 ```
+
+## Known issues:
+
+* Chrome (since version 50) doesn't allow geolocation requests from http connections. So testing with a mobile device is a bit tricky, when you don't have an ssl proxy.
+
