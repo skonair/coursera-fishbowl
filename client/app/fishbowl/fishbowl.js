@@ -85,32 +85,18 @@ Template.fishmap.onRendered(function() {
 
 Template.actioncontrols.events({
 	"click .js-start-fishing": function(event) {
-
-		var currentLocation = getCurrentLocation();
-		var currentFishingSite = {
-			coord: getCurrentLocation(),
-			crowdedness: 1,
-			cleanliness: 1,
-			createdOn: new Date(),
-			people: []
-		};
-
-		var savedFishingSite = Meteor.call('addFishingSite', currentFishingSite, function(err, id) {
+		var savedFishingSite = Meteor.call('startFishing', getCurrentLocation(), function(err, id) {
 			if (err) {
 				console.log('Error ', err);
 			} else {
 				selectMarker(id);
 			}
 		});
-
-		if (savedFishingSite) {
-			currentFishingSite = savedFishingSite;
-		}
-
 		Session.set('isFishing', true);
 		return false; // prevent browser reload
 	},
 	"click .js-stop-fishing": function(event) {
+		Meteor.call('stopFishing');
 		Session.set('isFishing', false);
 		return false; // prevent browser reload
 	},

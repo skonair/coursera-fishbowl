@@ -12,7 +12,7 @@ Meteor.startup(function () {
 		crowdedness: 2,
 		cleanliness: 2,
 		createdOn: new Date(),
-		people: [],
+		people: ['1'],
 	});
 	FishingSites.insert({
 		coord : {
@@ -22,7 +22,7 @@ Meteor.startup(function () {
 		crowdedness: 1,
 		cleanliness: 3,
 		createdOn: new Date(),
-		people: [],
+		people: ['2'],
 	});
   }
 });
