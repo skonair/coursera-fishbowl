@@ -27,6 +27,12 @@ Template.siteinfo.helpers({
 	}
 });
 
+Template.actioncontrols.helpers({
+	isFishing: function() {
+		return Session.get('isFishing');
+	}
+});
+
 
 // events for the fishmap (google map)
 Template.fishmap.onCreated(function() {  
@@ -79,6 +85,22 @@ Template.fishmap.onCreated(function() {
 Template.fishmap.onRendered(function() {
   GoogleMaps.load();
 });
+
+Template.actioncontrols.events({
+	"click .js-start-fishing": function(event) {
+		Session.set('isFishing', true);
+		return false; // prevent browser reload
+	},
+	"click .js-stop-fishing": function(event) {
+		Session.set('isFishing', false);
+		return false; // prevent browser reload
+	},
+	"click .js-tweet": function(event) {
+		// TODO implement the tweet function
+		return false; // prevent browser reload
+	}
+});
+
 
 // helper
 

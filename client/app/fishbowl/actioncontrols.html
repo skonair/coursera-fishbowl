@@ -1,5 +1,16 @@
 <template name="actioncontrols">
 
-  <h1>Action Controls</h1>
+  {{#if isFishing}}
+    <form class="js-tweet">
+      <button id="tweetBtn" class="btn btn-primary" type="submit">Tweet 'I am fishing'</button>
+    </form>
+    <form class="js-stop-fishing">  
+      <button id="stopFishingBtn" class="btn btn-warning" type="submit">Stop Fishing</button>
+    </form>  
+  {{else}}
+    <form class="js-start-fishing">
+      <button id="startFishingBtn" class="btn btn-primary" type="submit">Start Fishing</button>
+    </form>
+  {{/if}}
 
 </template>
