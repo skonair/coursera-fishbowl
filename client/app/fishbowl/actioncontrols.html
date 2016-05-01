@@ -17,8 +17,9 @@
 
     {{#if isFishing}}
       <form class="js-tweet">
-        <button id="tweetBtn" class="btn btn-primary action-btn" type="submit">Tweet 'I am fishing'</button>
+        <button id="tweetBtn" class="btn btn-primary action-btn" type="submit">Fish caught!</button>
       </form>
+      {{> addfischli}}
       <p></p>
       <form class="js-stop-fishing">  
         <button id="stopFishingBtn" class="btn btn-warning action-btn" type="submit">Stop Fishing</button>
@@ -35,3 +36,31 @@
 	
 </template>
 
+<template name="addfischli">
+  <div class="modal fade" id="addFishModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Describe the Fish</h4>
+        </div>
+
+        <div class="modal-body">
+          <label for="fishType">Type</label>
+          <input type="text" id="fishType" />
+        </div>
+
+        <div class="modal-body">
+          <label for="fishLength">Length (cm)</label>
+          <input type="text" id="length" />
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="js-save-fish">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>

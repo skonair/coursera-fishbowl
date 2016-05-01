@@ -103,6 +103,31 @@ Template.actioncontrolsbuttons.events({
 	},
 	"click .js-tweet": function(event) {
 		// TODO implement the tweet function
+		event.preventDefault();
+
+		console.log('addFishModal is ', $('#addFishModal'));
+
+		$('#addFishModal').modal('show');
+		return false; // prevent browser reload
+	}
+});
+
+Template.addfischli.events({
+	"click .js-save-fish": function(event) {
+
+		var fishdata = {
+			type: event.target.fishType.value,
+			length: event.target.fishLength.value
+		};
+
+		var savedFish = Meteor.call('addFish', fishdata, getCurrentLocation(), function(err, id) {
+			if (err) {
+				console.log('Error ', err);
+			} else {
+				// fish added
+
+			}
+		});
 		return false; // prevent browser reload
 	}
 });

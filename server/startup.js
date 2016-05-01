@@ -25,4 +25,30 @@ Meteor.startup(function () {
 		people: ['2'],
 	});
   }
+
+  if (!Fish.findOne()){
+	console.log("No fish yet. Creating starter data.");
+
+	Fish.insert({
+		coord : {
+			lat: 52.334043,
+			lng: 8.622670
+		},
+		type : 'trout',
+		length: 25,
+		createdOn: new Date(),
+		user: '1',
+	});
+	Fish.insert({
+		coord : {
+			lat: 52.334810,
+			lng: 8.634648
+		},
+		type : 'trout',
+		length: 30,
+		createdOn: new Date(),
+		user: '2',
+	});
+  }
+
 });

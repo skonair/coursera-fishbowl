@@ -12,8 +12,6 @@
 
 <template name="show_site_information">
 
-
-
   <div class="row">
     <div class="col-xs-4 col-md-4"><h4>Crowdedness</h4></div>
     <div class="col-xs-8 col-md-8"><h4>{{crowdedness}}</h4></div>
@@ -28,9 +26,16 @@
   <h3>People</h3>
   {{#each people}}
     <div class="row">
-      <div class="col-xs-4 col-md-4"><h4>{{avatar}}</h4></div>
-      <div class="col-xs-8 col-md-8"><h4>{{name}}</h4></div>
+      <div class="col-xs-4 col-md-4"><h4>User</h4></div>
+      <div class="col-xs-8 col-md-8"><h4>{{.}}</h4></div>
     </div>
   {{/each}}
+
+</template>
+
+
+<template name="fishinfo">
+
+  
 
 </template>
