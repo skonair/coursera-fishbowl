@@ -1,8 +1,8 @@
-Meteor.publish("fishingsites", function () {
+Meteor.publish('fishingsites', function () {
 	return FishingSites.find({});
 });
 
-Meteor.publish("fish", function () {
+Meteor.publish('fish', function () {
 	return Fish.find({});
 });
 
@@ -26,7 +26,9 @@ Meteor.methods({
 				var deltaLatitude = coords.lat - item.coord.lat;
 				var deltaLongitude = coords.lng - item.coord.lng;
 				var delta = Math.sqrt((deltaLatitude * deltaLatitude) + (deltaLongitude * deltaLongitude));
-				if (delta < 0.05) {
+				console.log('delta: ', delta)
+				// very rough: 50m
+				if (delta < 0.001) {
 					site = item;
 				}
 			});
@@ -86,7 +88,7 @@ Meteor.methods({
 				createdOn: new Date(),
 				user: user._id,
 			};
-
+			Fish.insert(fish);
 		} else {
 			console.log('User is not logged in.');
 			return undefined;

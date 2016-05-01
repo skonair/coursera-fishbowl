@@ -7,3 +7,6 @@ Router.route('/', function() {
 Router.route('/about', function() {
   this.render('about');
 });
+Router.route('/fishlist', function() {
+  this.render('fishlist');
+});

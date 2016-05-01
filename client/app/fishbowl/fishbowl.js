@@ -1,19 +1,21 @@
-Meteor.subscribe("fishingsites");
+Meteor.subscribe('fishingsites');
+Meteor.subscribe('fish');
 
 var markers = {};
 var selectedMarker;
-
 
 Template.fishmap.helpers({
     fishMapOptions: function() {
     // Make sure the maps API has loaded
     if (GoogleMaps.loaded()) {
-    	coords = getCurrentLocation();
-      // Map initialization options
-      return {
-        center: new google.maps.LatLng(coords.lat, coords.lng),
-        zoom: 12
-      };
+	    var	coords = getCurrentLocation();
+    	// Map initialization options
+    	if (coords) {
+	      	return {
+	        	center: new google.maps.LatLng(coords.lat, coords.lng),
+	        	zoom: 12
+	      	};    		
+    	}
     }
   }
 });
@@ -21,6 +23,17 @@ Template.fishmap.helpers({
 Template.siteinfo.helpers({
 	selectedSite: function() {
 		return Session.get('selectedFishingSite');
+	}
+});
+
+Template.fishlist.helpers({
+	fishes: function() {
+		var user = Meteor.user();
+		if (user) {
+			return Fish.find( { user: user._id } ).fetch();
+		} else {
+			return undefined;
+		}
 	}
 });
 
@@ -47,7 +60,7 @@ Template.fishmap.onCreated(function() {
         added: function (fishingSite) {
         	// create a google map marker for each fishing spot
           var marker = new google.maps.Marker({
-            draggable: true,
+            draggable: false,
             animation: google.maps.Animation.DROP,
             icons: 'https://www.google.com/mapfiles/marker.png',
             position: new google.maps.LatLng(fishingSite.coord.lat, fishingSite.coord.lng),
@@ -58,7 +71,6 @@ Template.fishmap.onCreated(function() {
           marker.addListener('click', function() {
           	selectMarker(fishingSite._id);
           });
-
 
 //          google.maps.event.addListener(marker, 'dragend', function(event) {
 //            Markers.update(marker.id, { $set: { lat: event.latLng.lat(), lng: event.latLng.lng() }});
@@ -80,7 +92,7 @@ Template.fishmap.onCreated(function() {
 });
 
 Template.fishmap.onRendered(function() {
-  GoogleMaps.load();
+	GoogleMaps.load();
 });
 
 Template.actioncontrolsbuttons.events({
@@ -102,10 +114,7 @@ Template.actioncontrolsbuttons.events({
 		return false; // prevent browser reload
 	},
 	"click .js-tweet": function(event) {
-		// TODO implement the tweet function
 		event.preventDefault();
-
-		console.log('addFishModal is ', $('#addFishModal'));
 
 		$('#addFishModal').modal('show');
 		return false; // prevent browser reload
@@ -113,7 +122,8 @@ Template.actioncontrolsbuttons.events({
 });
 
 Template.addfischli.events({
-	"click .js-save-fish": function(event) {
+	"submit .js-save-fish": function(event) {
+		event.preventDefault();
 
 		var fishdata = {
 			type: event.target.fishType.value,
@@ -125,9 +135,10 @@ Template.addfischli.events({
 				console.log('Error ', err);
 			} else {
 				// fish added
-
 			}
 		});
+		$('#addFishModal').modal('hide');
+
 		return false; // prevent browser reload
 	}
 });
@@ -137,15 +148,11 @@ Template.addfischli.events({
 
 function getCurrentLocation() {
     var currentLocation = Geolocation.currentLocation();
-    var lat = 52.4;
-    var lng = 8.7;
-    if (currentLocation) {
-      lat = currentLocation.coords.latitude;
-      lng = currentLocation.coords.longitude;    	
-    }
+//    var lat = currentLocation.coords.latitude; // 52.4;
+//    var lng = currentLocation.coords.longitude; // 8.7;
     return { 
-    	lat: lat, 
-    	lng: lng
+    	lat: currentLocation.coords.latitude, 
+    	lng: currentLocation.coords.longitude
     };
 }
 
