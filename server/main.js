@@ -6,6 +6,13 @@ Meteor.publish('fish', function () {
 	return Fish.find({});
 });
 
+// reduce the users collection on client side to the email address
+Meteor.publish('users', function () {
+  return Meteor.users.find( {}, {fields: {emails: 1} } );
+//  return Meteor.users.find();
+});
+
+
 Meteor.methods({
 
 	isLoggedIn: function() {
@@ -13,6 +20,16 @@ Meteor.methods({
 			return true;
 		} else {
 			return false;
+		}
+	},
+
+	getName: function(id) {
+		var user = Meteor.users.findOne({_id: id});
+		if (Meteor.user() && user) {
+			console.log('emails: ', user.emails[0]);
+			return user.emails[0].address;
+		} else {
+			return undefined;
 		}
 	},
 

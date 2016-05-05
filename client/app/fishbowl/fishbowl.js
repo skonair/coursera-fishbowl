@@ -1,5 +1,6 @@
 Meteor.subscribe('fishingsites');
 Meteor.subscribe('fish');
+Meteor.subscribe('users');
 
 var markers = {};
 var selectedMarker;
@@ -50,6 +51,16 @@ Template.actioncontrolsbuttons.helpers({
 	}
 });
 
+Template.show_site_information.helpers({
+	getName: function(id) {
+		var user = Meteor.users.findOne( {_id: id} );
+		if (user) {
+			return user.emails[0].address;
+		} else {
+			return undefined;
+		}
+	}
+});
 
 // events for the fishmap (google map)
 Template.fishmap.onCreated(function() {  
@@ -150,10 +161,14 @@ function getCurrentLocation() {
     var currentLocation = Geolocation.currentLocation();
 //    var lat = currentLocation.coords.latitude; // 52.4;
 //    var lng = currentLocation.coords.longitude; // 8.7;
-    return { 
-    	lat: currentLocation.coords.latitude, 
-    	lng: currentLocation.coords.longitude
-    };
+	if (currentLocation) {
+		    return { 
+ 			   	lat: currentLocation.coords.latitude, 
+    			lng: currentLocation.coords.longitude
+	    };
+	} else {
+		return undefined;
+	}
 }
 
 function selectMarker(fishingSiteId) {
