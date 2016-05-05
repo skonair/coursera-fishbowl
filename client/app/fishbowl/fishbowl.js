@@ -155,6 +155,21 @@ Template.addfischli.events({
 });
 
 
+Template.show_site_information.events({
+  "change #clean1" : function (event) {
+   console.log('clean1 clicked...');
+ },
+  "change #clean2" : function (event) {
+   console.log('clean2 clicked...');
+ },
+  "change #clean3" : function (event) {
+   console.log('clean3 clicked...');
+ }
+
+});
+
+
+
 // helper
 
 function getCurrentLocation() {
