@@ -5,6 +5,8 @@ Meteor.subscribe('users');
 var markers = {};
 var selectedMarker;
 
+Session.set('selectedFishingSite', undefined);
+
 Template.fishmap.helpers({
     fishMapOptions: function() {
     // Make sure the maps API has loaded
