@@ -51,7 +51,7 @@ Template.actioncontrolsbuttons.helpers({
 	}
 });
 
-Template.show_site_information.helpers({
+Template.showsiteinformation.helpers({
 	getName: function(id) {
 		var user = Meteor.users.findOne( {_id: id} );
 		if (user) {
@@ -59,7 +59,38 @@ Template.show_site_information.helpers({
 		} else {
 			return undefined;
 		}
-	}
+	},
+	isdisabled: function() {
+		if (Meteor.user()) {
+			return '';
+		} else {
+			return 'disabled';
+		}
+	},
+	isclean: function(id) {
+		return (this.cleanliness == id) ? 'active' : '';
+	},
+	iscrowd: function(id) {
+		return (this.crowd == id) ? 'active' : '';
+	},
+	isclean1: function(id) {
+		return Session.get('clean_1');
+	},
+	isclean2: function() {
+		return Session.get('clean_2');
+	},
+	isclean3: function() {
+		return Session.get('clean_3');
+  },
+	iscrowd1: function(id) {
+		return Session.get('crowd_1');
+	},
+	iscrowd2: function() {
+		return Session.get('crowd_2');
+	},
+	iscrowd3: function() {
+		return Session.get('crowd_3');
+  }
 });
 
 // events for the fishmap (google map)
@@ -90,7 +121,11 @@ Template.fishmap.onCreated(function() {
           markers[fishingSite._id] = marker;
         },
         changed: function (newDocument, oldDocument) {
-          markers[newDocument._id].setPosition({ lat: newDocument.lat, lng: newDocument.lng });
+        	if (markers[oldDocument._id] == selectedMarker) {
+        		setCleanliness(newDocument.cleanliness);
+        		setCrowdedness(newDocument.crowdedness);
+        	}
+//          markers[newDocument._id].setPosition({ lat: newDocument.lat, lng: newDocument.lng });
         },
         removed: function (oldDocument) {
           markers[oldDocument._id].setMap(null);
@@ -155,22 +190,54 @@ Template.addfischli.events({
 });
 
 
-Template.show_site_information.events({
-  "change #clean1" : function (event) {
-   console.log('clean1 clicked...');
+Template.showsiteinformation.events({
+  'click .js-cleanliness': function (e) {
+//  	$('.js-cleanliness').removeClass('active');
+//	Session.set('selectedMessage', e.currentTarget.id);
+
+	var _cleanliness = e.target.getAttribute('data-id');
+
+	setCleanliness(_cleanliness);
+
+    var fishingSite = Session.get('selectedFishingSite');
+
+    Meteor.call('updateCleanliness', fishingSite._id, _cleanliness);
  },
-  "change #clean2" : function (event) {
-   console.log('clean2 clicked...');
- },
-  "change #clean3" : function (event) {
-   console.log('clean3 clicked...');
+
+  'click .js-crowdedness': function (e) {
+//  	$('.js-cleanliness').removeClass('active');
+//	Session.set('selectedMessage', e.currentTarget.id);
+
+	var _crowdedness = e.target.getAttribute('data-id');
+
+	setCrowdedness(_crowdedness);
+
+    var fishingSite = Session.get('selectedFishingSite');
+
+    Meteor.call('updateCrowdedness', fishingSite._id, _crowdedness);
  }
+
 
 });
 
 
 
 // helper
+
+function setCleanliness(_cleanliness) {
+		Session.set('clean_1', '');
+		Session.set('clean_2', '');
+		Session.set('clean_3', '');
+		Session.set('clean_' + _cleanliness, 'active');
+}
+
+function setCrowdedness(_crowdedness) {
+		Session.set('crowd_1', '');
+		Session.set('crowd_2', '');
+		Session.set('crowd_3', '');
+		Session.set('crowd_' + _crowdedness, 'active');
+}
+
 
 function getCurrentLocation() {
     var currentLocation = Geolocation.currentLocation();
@@ -197,5 +264,7 @@ function selectMarker(fishingSiteId) {
 	selectedMarker = marker;
 
 	Session.set('selectedFishingSite', fishingSite);
+	setCleanliness(fishingSite.cleanliness);
+	setCrowdedness(fishingSite.crowdedness);
 }
 

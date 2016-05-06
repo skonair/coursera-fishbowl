@@ -26,7 +26,6 @@ Meteor.methods({
 	getName: function(id) {
 		var user = Meteor.users.findOne({_id: id});
 		if (Meteor.user() && user) {
-			console.log('emails: ', user.emails[0]);
 			return user.emails[0].address;
 		} else {
 			return undefined;
@@ -43,7 +42,7 @@ Meteor.methods({
 				var deltaLatitude = coords.lat - item.coord.lat;
 				var deltaLongitude = coords.lng - item.coord.lng;
 				var delta = Math.sqrt((deltaLatitude * deltaLatitude) + (deltaLongitude * deltaLongitude));
-				console.log('delta: ', delta)
+				console.log('delta: ', delta);
 				// very rough: 50m
 				if (delta < 0.001) {
 					site = item;
@@ -110,7 +109,30 @@ Meteor.methods({
 			console.log('User is not logged in.');
 			return undefined;
 		}
+	},
+
+	updateCleanliness: function(fishingSiteId, _cleanliness) {
+		if (Meteor.user()) {
+		    FishingSites.update(
+    		{ _id: fishingSiteId },
+    		{ $set: { cleanliness: _cleanliness} } );
+
+		} else {
+			return undefined;
+		}
+	},
+
+	updateCrowdedness: function(fishingSiteId, _crowdedness) {
+		if (Meteor.user()) {
+		    FishingSites.update(
+    		{ _id: fishingSiteId },
+    		{ $set: { crowdedness: _crowdedness} } );
+
+		} else {
+			return undefined;
+		}
 	}
+
 
 });
 

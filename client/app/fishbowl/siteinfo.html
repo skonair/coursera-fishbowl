@@ -3,35 +3,52 @@
   <h1>Spot Information</h1>
 
   {{#if selectedSite}}
-    {{> show_site_information selectedSite}}
+    {{> showsiteinformation selectedSite}}
   {{else}}
     <h4>Please select a fishing spot on the map.</h4>
   {{/if}}
 
 </template>
 
-<template name="show_site_information">
+<template name="showsiteinformation">
 
   <div class="row">
-    <div class="col-xs-4 col-md-4"><h4>Crowdedness</h4></div>
-    <div class="col-xs-8 col-md-8"><h4>{{crowdedness}}</h4></div>
+    <div class="col-xs-4 col-md-4"><h4>Crowded?</h4></div>
+
+    <div class="col-xs-8 col-md-8">
+		<div class="btn-group" data-toggle="buttons-radio">
+			<div class="row">
+				<div class="col-xs-4 col-md-4">
+					<button type="button" class="btn btn-primary selectbutton js-crowdedness {{iscrowd1}} {{isdisabled}}" id="crowd_1" data-id="1">Alone</button>
+				</div>
+				<div class="col-xs-4 col-md-4">
+					<button type="button" class="btn btn-primary selectbutton js-crowdedness {{iscrowd2}} {{isdisabled}}" id="crowd_2" data-id="2">Few</button>
+				</div>
+				<div class="col-xs-4 col-md-4">
+					<button type="button" class="btn btn-primary selectbutton js-crowdedness {{iscrowd3}} {{isdisabled}}" id="crowd_3" data-id="3">PARTY</button>
+				</div>
+			</div>
+		</div>
+    </div>
+
   </div>
 
   <div class="row">
-    <div class="col-xs-4 col-md-4"><h4>Cleanliness</h4></div>
+    <div class="col-xs-4 col-md-4"><h4>Clean?</h4></div>
     <div class="col-xs-8 col-md-8">
 
-    <div class="btn-group" data-toggle="buttons">
-	    	<label class="btn btn-primary">
-    			<input type="radio" name="cleanliness" id="clean1">Very clean
-    		</label>
-    
-    	<label class="btn btn-primary">
-    		<input type="radio" name="cleanliness" id="clean2">Its ok
-    	</label>
-    	<label class="btn btn-primary">
-    		<input type="radio" name="cleanliness" id="clean3">Dirty
-    	</label>
+    <div class="btn-group" data-toggle="buttons-radio">
+    	<div class="row">
+			<div class="col-xs-4 col-md-4">
+		    	<button type="button" class="btn btn-primary selectbutton js-cleanliness {{isclean1}} {{isdisabled}}" id="clean_1" data-id="1">Clean</button>
+		    </div>
+			<div class="col-xs-4 col-md-4">		    
+    			<button type="button" class="btn btn-primary selectbutton js-cleanliness {{isclean2}} {{isdisabled}}" id="clean_2" data-id="2">Its ok</button>
+    		</div>
+			<div class="col-xs-4 col-md-4">    		
+    			<button type="button" class="btn btn-primary selectbutton js-cleanliness {{isclean3}} {{isdisabled}}" id="clean_3" data-id="3">Dirty</button>
+    		</div>
+    	</div>
     </div>
 <!--    	<h4>{{cleanliness}}</h4> -->
     </div>
