@@ -15,3 +15,7 @@
 .selectbutton {
 	width: 100%;
 }
+
+.login-link-and-dropdown-list > a {
+	color: #ffffff;
+}

@@ -2,7 +2,53 @@
   <div class="container">
     <h1>About</h1>
     <p>
-    ...
+    Thank you for checking out the <em>Global Fishbowl</em>. It is a collaborative web application for anglers. Imagine you want to go fishing and you want to meet some friends or like-minded people. Then you can check with this application, whether a person you know is already fishing nearby. Or if you want some alone-time then you can check
+    if your favourite spot is already taken.    
     </p>
+
+    <p>
+    After you open the main page, you will see the main window with the following areas:
+    <ul>
+      <li>Navigation Bar - navigation area with links to the map, the fishlist and the about page. On the right there is the login or account button.</li>
+      <li>Fishing Map - the map shows all spots, where people are currently fishing.</li>
+      <li>Spot Information - information about the currently selected spot on the map. This information is right now crowdedness and cleanliness. Crowdedness describes how many people are currently fishing in the area. Cleanliness describes, whether the spot is clean or dirty.</li>
+      <li>Action Controls - at the bottom of the page is the action controls area. Depending on the current state, you have several options. If you are not logged in, you can not do any actions. If you are logged in, you can <em>Start Fishing</em>. Then a new spot (marker on the map) is created or if you are near an existing spot, you are assigned to this spot. Your email-address will appear in the <em>People in this spot</em> list. If you are assigned to a spot, you can either <em>Stop Fishing</em> or add a fish to your personal fishlist via <em>Fish caught!</em> </li>
+    </ul>
+    </p>
+
+    <p>
+    My main focus of this application was to have a small feature set, that will be presented as easy as possible. It should only serve one purpose: Help anglers to connect.
+    </p>
+
+  <h3>Technology</h3>
+  <p>
+  Base components:
+  <ul>
+    <li>Meteor v1.2.1</li>
+    <li>Bootstrap v3.3.6 for the main design elements</li>
+    <li>jQuery v1.12.0 for some of the browser interactivity and DOM manipulation</li>
+   </ul>
+   Meteor packages:
+   <ul>
+    <li>accounts-ui and accounts-password for the user account handling and design widgets</li>
+    <li>dburles:google-maps for the Google Maps Javascript API v3 support</li>
+    <li>iron:router for the routing of the meteor application</li>
+    <li>mdg:geolocation provides a reactive geolocation on desktop and mobile</li>
+   </ul>
+  </p>
+
+  <h3>Known Issues</h3>
+  <p>
+    <ul>
+      <li>Since Chrome 50, the getCurrentLocation browser call requires an https connection when not connecting via a safe location like <em>localhost</em>. So testing with a mobile device would be a bit tricky as your current location can not be found, if the application is not running within an SSL connection (https). </li>
+      <li>The design of the logo and other buttons is still... lets say immature.</li>
+      <li>The fishlist is not integrated in the spot-information area and is still not well designed.</li>
+      <li>The buttons on the spot information are reactive, the people in the spot aren't yet.</li>
+      <li></li>
+    </ul>
+  </p>
+
   </div>
+
+
 </template>
