@@ -83,7 +83,7 @@ Template.showsiteinformation.helpers({
 	},
 	isclean3: function() {
 		return Session.get('clean_3');
-  },
+    },
 	iscrowd1: function(id) {
 		return Session.get('crowd_1');
 	},
@@ -92,7 +92,14 @@ Template.showsiteinformation.helpers({
 	},
 	iscrowd3: function() {
 		return Session.get('crowd_3');
-  }
+    },
+    fishingsite: function() {
+    	return Session.get('selectedFishingSite');
+    },
+    fpeople: function() {
+    	return Session.get('fpeople');
+    }
+
 });
 
 // events for the fishmap (google map)
@@ -126,6 +133,7 @@ Template.fishmap.onCreated(function() {
         	if (markers[oldDocument._id] == selectedMarker) {
         		setCleanliness(newDocument.cleanliness);
         		setCrowdedness(newDocument.crowdedness);
+        		setPeople(newDocument.people);
         	}
 //          markers[newDocument._id].setPosition({ lat: newDocument.lat, lng: newDocument.lng });
         },
@@ -211,6 +219,9 @@ Template.showsiteinformation.events({
 //	Session.set('selectedMessage', e.currentTarget.id);
 
 	var _crowdedness = e.target.getAttribute('data-id');
+	var disabled = e.target.getAttribute('class');
+
+	console.log('disabled: ', disabled);
 
 	setCrowdedness(_crowdedness);
 
@@ -240,6 +251,9 @@ function setCrowdedness(_crowdedness) {
 		Session.set('crowd_' + _crowdedness, 'active');
 }
 
+function setPeople(_people) {
+	Session.set('fpeople', _people);	
+}
 
 function getCurrentLocation() {
     var currentLocation = Geolocation.currentLocation();
@@ -266,7 +280,9 @@ function selectMarker(fishingSiteId) {
 	selectedMarker = marker;
 
 	Session.set('selectedFishingSite', fishingSite);
+
 	setCleanliness(fishingSite.cleanliness);
 	setCrowdedness(fishingSite.crowdedness);
+	setPeople(fishingSite.people);
 }
 

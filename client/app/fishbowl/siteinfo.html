@@ -1,8 +1,11 @@
 <template name="siteinfo">
 
-  <h1>Spot Information</h1>
+  <h2>Spot Information</h2>
 
   {{#if selectedSite}}
+    <p class="text-muted">
+    Select a fishing spot on the map on the left and see the details about the spot here. 
+    </p>
     {{> showsiteinformation selectedSite}}
   {{else}}
     <h4>Please select a fishing spot on the map.</h4>
@@ -13,9 +16,19 @@
 <template name="showsiteinformation">
 
   <div class="row">
-    <div class="col-xs-4 col-md-4"><h4>Crowded?</h4></div>
+    <div class="col-xs-12 col-md-12"><h6>Location</h6></div>
 
-    <div class="col-xs-8 col-md-8">
+    <div class="col-xs-12 col-md-12">
+      {{coord.lat}} {{coord.lng}}
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-xs-12 col-md-12"><h6>Crowdedness</h6></div>
+
+    <div class="col-xs-12 col-md-12">
 		<div class="btn-group" data-toggle="buttons-radio">
 			<div class="row">
 				<div class="col-xs-4 col-md-4">
@@ -34,8 +47,8 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-4 col-md-4"><h4>Clean?</h4></div>
-    <div class="col-xs-8 col-md-8">
+    <div class="col-xs-12 col-md-12"><h6>Cleanliness</h6></div>
+    <div class="col-xs-12 col-md-12">
 
     <div class="btn-group" data-toggle="buttons-radio">
     	<div class="row">
@@ -55,11 +68,12 @@
   </div>
 
 
-  <h3>People in this spot</h3>
-  {{#each people}}
+  <p>&nbsp;</p>
+
+  <h6>People fishing in this spot</h6>
+  {{#each fpeople}}
     <div class="row">
-      <div class="col-xs-4 col-md-4"><h4>User</h4></div>
-      <div class="col-xs-8 col-md-8"><h4>{{getName .}}</h4></div>
+      <div class="col-xs-12 col-md-12"><h5>{{getName .}} </h5></div>
     </div>
   {{/each}}
 

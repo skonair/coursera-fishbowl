@@ -19,3 +19,7 @@
 .login-link-and-dropdown-list > a {
 	color: #ffffff;
 }
+
+.btn-group {
+	width: 100%;
+}
