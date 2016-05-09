@@ -32,13 +32,12 @@ Meteor packages:
 * dburles:google-maps for the Google Maps Javascript API v3 support
 * iron:router for the routing of the meteor application
 * mdg:geolocation provides a reactive geolocation on desktop and mobile
+* momentjs:moment for time formatting
 
 
 ## Known issues:
 
 * Chrome (since version 50) doesn't allow geolocation requests from http connections. So testing with a mobile device is a bit tricky, when you don't have an ssl proxy.
-* The design of the logo and other buttons is still... lets say immature.
 * The fishlist is not integrated in the spot-information area and is still not well designed.
-* The buttons on the spot information are reactive, the people in the spot aren't yet.
 * The crowdedness and cleanliness buttons can be disabled; so no real radio-button type yet.
 

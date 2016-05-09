@@ -7,6 +7,15 @@ var selectedMarker;
 
 Session.set('selectedFishingSite', undefined);
 
+
+Template.registerHelper('formatDate', function(date) {
+  return moment(date).format('LLL');
+});
+
+Template.registerHelper('formatGeoLocation', function(coord) {
+  return coord.lat + ' ' + coord.lng;
+});
+
 Template.fishmap.helpers({
     fishMapOptions: function() {
     // Make sure the maps API has loaded
@@ -58,6 +67,24 @@ Template.showsiteinformation.helpers({
 		var user = Meteor.users.findOne( {_id: id} );
 		if (user) {
 			return user.emails[0].address;
+		} else {
+			return undefined;
+		}
+	},
+	getFishes: function(id) {
+		var currentLocation = getCurrentLocation();
+		if (currentLocation) {
+			var epsilon = 0.0005;
+			var lat0 = currentLocation.lat - epsilon;
+			var lat1 = currentLocation.lat + epsilon;
+			var lng0 = currentLocation.lng - epsilon;
+			var lng1 = currentLocation.lng + epsilon;
+			var fishes = Fish.find(
+			{ user: id, 
+				'coord.lat': {$gt: lat0, $lt: lat1},
+				'coord.lng': {$gt: lng0, $lt: lng1}
+			}).count();
+		return fishes;			
 		} else {
 			return undefined;
 		}

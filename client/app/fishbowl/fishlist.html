@@ -2,12 +2,34 @@
 
 	<div class="container">
 
+	<table class="table table-striped">
+		<caption>Fishes caught by you</caption>
+
+		<thead>
+		 	<tr>
+		 		<th>Date</th>
+		 		<th>Location</th>
+		 		<th>Fish Type</th>
+		 		<th>Length (cm)</th>
+		 	</tr>
+		</thead>
+
+		<tbody>
+
 	{{#each fishes}}
-		<div class="row">
-			{{createdOn}} {{type}} {{length}}
-		</div>
+			<tr>
+				<td>{{formatDate createdOn}}</td>
+				<td>{{formatGeoLocation coord}}</td>
+				<td>{{type}}</td>
+				<td>{{length}}</td>
+			</tr>
 
 	{{/each}}
+
+
+		</tbody>
+
+	</table>
 
 	</div>
 

@@ -21,3 +21,4 @@ accounts-ui
 accounts-password
 mdg:geolocation
 dburles:google-maps
+momentjs:moment
