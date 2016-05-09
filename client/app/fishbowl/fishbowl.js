@@ -3,7 +3,8 @@ Meteor.subscribe('fish');
 Meteor.subscribe('users');
 
 var markers = {};
-var selectedMarker;
+
+Session.set('selectedMarker', undefined);
 
 Session.set('selectedFishingSite', undefined);
 
@@ -137,10 +138,17 @@ Template.fishmap.onCreated(function() {
 
         added: function (fishingSite) {
         	// create a google map marker for each fishing spot
+
+          var markerIcon = 'https://www.google.com/mapfiles/marker.png';
+          var site = Session.get('selectedFishingSite');
+		  if (site && site._id == fishingSite._id) {
+		  	markerIcon = 'https://www.google.com/mapfiles/marker_green.png';
+	   	  }
+
           var marker = new google.maps.Marker({
             draggable: false,
             animation: google.maps.Animation.DROP,
-            icons: 'https://www.google.com/mapfiles/marker.png',
+            icon: markerIcon,
             position: new google.maps.LatLng(fishingSite.coord.lat, fishingSite.coord.lng),
             map: map.instance,
             id: fishingSite._id
@@ -157,7 +165,8 @@ Template.fishmap.onCreated(function() {
           markers[fishingSite._id] = marker;
         },
         changed: function (newDocument, oldDocument) {
-        	if (markers[oldDocument._id] == selectedMarker) {
+        	var selectedMarker = Session.get('selectedMarker');
+        	if (markers[oldDocument._id].id == selectedMarker) {
         		setCleanliness(newDocument.cleanliness);
         		setCrowdedness(newDocument.crowdedness);
         		setPeople(newDocument.people);
@@ -176,6 +185,8 @@ Template.fishmap.onCreated(function() {
 
 Template.fishmap.onRendered(function() {
 	GoogleMaps.load();
+
+
 });
 
 Template.actioncontrolsbuttons.events({
@@ -191,9 +202,13 @@ Template.actioncontrolsbuttons.events({
 		return false; // prevent browser reload
 	},
 	"click .js-stop-fishing": function(event) {
-		Meteor.call('stopFishing');
-		Session.set('isFishing', false);
-		Session.set('selectedFishingSite', undefined);
+		Meteor.call('stopFishing', function (err, data) {
+			if (err) {
+				console.err('stop fishing failed: ', err);
+			}
+			Session.set('isFishing', false);
+//		Session.set('selectedFishingSite', undefined);			
+		});
 		return false; // prevent browser reload
 	},
 	"click .js-tweet": function(event) {
@@ -300,11 +315,12 @@ function selectMarker(fishingSiteId) {
 	var fishingSite = FishingSites.findOne({_id: fishingSiteId});
 	var marker = markers[fishingSiteId];
 
+	var selectedMarker = Session.get('selectedMarker');
 	if (selectedMarker) {
-  		selectedMarker.setIcon('https://www.google.com/mapfiles/marker.png');          		
+  		markers[selectedMarker].setIcon('https://www.google.com/mapfiles/marker.png');          		
     }
 	marker.setIcon('https://www.google.com/mapfiles/marker_green.png');
-	selectedMarker = marker;
+	Session.set('selectedMarker', marker.id);
 
 	Session.set('selectedFishingSite', fishingSite);
 
