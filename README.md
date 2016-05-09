@@ -38,6 +38,5 @@ Meteor packages:
 ## Known issues:
 
 * Chrome (since version 50) doesn't allow geolocation requests from http connections. So testing with a mobile device is a bit tricky, when you don't have an ssl proxy.
-* The fishlist is not integrated in the spot-information area and is still not well designed.
 * The crowdedness and cleanliness buttons can be disabled; so no real radio-button type yet.
 
