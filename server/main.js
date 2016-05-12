@@ -42,7 +42,6 @@ Meteor.methods({
 				var deltaLatitude = coords.lat - item.coord.lat;
 				var deltaLongitude = coords.lng - item.coord.lng;
 				var delta = Math.sqrt((deltaLatitude * deltaLatitude) + (deltaLongitude * deltaLongitude));
-				console.log('delta: ', delta);
 				// very rough: 50m
 				if (delta < 0.001) {
 					site = item;

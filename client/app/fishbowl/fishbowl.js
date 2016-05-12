@@ -263,8 +263,6 @@ Template.showsiteinformation.events({
 	var _crowdedness = e.target.getAttribute('data-id');
 	var disabled = e.target.getAttribute('class');
 
-	console.log('disabled: ', disabled);
-
 	setCrowdedness(_crowdedness);
 
     var fishingSite = Session.get('selectedFishingSite');

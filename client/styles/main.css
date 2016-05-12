@@ -23,3 +23,7 @@
 .btn-group {
 	width: 100%;
 }
+
+.btn.disabled { 
+	pointer-events: none; 
+}

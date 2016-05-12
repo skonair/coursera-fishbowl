@@ -38,5 +38,4 @@ Meteor packages:
 ## Known issues:
 
 * Chrome (since version 50) doesn't allow geolocation requests from http connections. So testing with a mobile device is a bit tricky, when you don't have an ssl proxy.
-* The crowdedness and cleanliness buttons can be disabled; so no real radio-button type yet.
 
