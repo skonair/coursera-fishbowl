@@ -314,7 +314,7 @@ function selectMarker(fishingSiteId) {
 	var marker = markers[fishingSiteId];
 
 	var selectedMarker = Session.get('selectedMarker');
-	if (selectedMarker) {
+	if (selectedMarker && markers[selectedMarker]) {
   		markers[selectedMarker].setIcon('https://www.google.com/mapfiles/marker.png');          		
     }
 	marker.setIcon('https://www.google.com/mapfiles/marker_green.png');
